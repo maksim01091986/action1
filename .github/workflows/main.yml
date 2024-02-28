@@ -1,0 +1,36 @@
+# -------------------------------------------------
+# GitHub Actions Test
+#
+# Copyleft (c) by Maksimus
+#--------------------------------------------------
+name: CI-CD-Pipeline-to-AWS-ElasticBeanstalk                                               # Name of Workflow (try to create name without "whitespace")
+env:                                                                         # VARIABLES of "workflow" level
+   EB_PACKAGE_S3_BUCKET_NAME       : "name_of_s3_bucket"
+   EB_APPLICATION_NAME             : "MyFlask"
+   EB_ENVIRONMENT_NAME             : "MyFlask-env"
+   DEPLOY_PACKAGE_NAME             : "flask_app_${{github.sha}}.zip"
+   AWS_REGION_NAME                 : "us-west-2"
+
+on:
+  push:
+    branches:
+      - master
+jobs:
+  my_ci_part:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Git clone our repo
+      uses: actions/checkout@v4
+
+    - name: Create ZIP deployment package
+      run: zip -r ${{env.DEPLOY_PACKAGE_NAME}} ./ -x *.git*  # create pakcage of current directory, name of package exclude all files which names are began from ".git"
+
+    - name: Configure my AWS credentials (Authentification)
+      uses: aws-actions/configure-aws-credentials@v4  # Name of AWS Git repo with actions 
+      with:  # parameters which we will send to action
+        aws-access-key-id    : ${{sercets.MY_AWS_ACCESS_KEY}}  # Name of parametr 1
+        aws-secret-access-key: ${{secrets.MY_AWS_SECRET_KEY}}  # Name of parametr 2
+        aws-region           : ${{env.AWS_REGION_NAME}}  # Name of parametr 3
+
+      
