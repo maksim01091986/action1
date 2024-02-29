@@ -28,7 +28,7 @@ jobs:
 
     - name: Configure my AWS credentials (Authentification)
       uses: aws-actions/configure-aws-credentials@v4                                             # Name of AWS Git repo with actions
-      with:  # parameters which we will send to action
+      with:                                                                                      # parameters which we will send to action
         aws-access-key-id    : ${{sercets.MY_AWS_ACCESS_KEY}}                                    # Name of parametr 1
         aws-secret-access-key: ${{secrets.MY_AWS_SECRET_KEY}}                                    # Name of parametr 2
         aws-region           : ${{env.AWS_REGION_NAME}}                                          # Name of parametr 3
@@ -46,7 +46,7 @@ jobs:
     steps:
     - name: Configure my AWS credentials (Authentification)
       uses: aws-actions/configure-aws-credentials@v4                                             # Name of AWS Git repo with actions
-      with:  # parameters which we will send to action
+      with:                                                                                      # parameters which we will send to action
         aws-access-key-id    : ${{sercets.MY_AWS_ACCESS_KEY}}                                    # Name of parametr 1
         aws-secret-access-key: ${{secrets.MY_AWS_SECRET_KEY}}                                    # Name of parametr 2
         aws-region           : ${{env.AWS_REGION_NAME}}                                          # Name of parametr 3
